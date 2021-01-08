@@ -56,13 +56,11 @@ exec.addEventListener('click',function(){
                 }else if(e.target.textContent === '!'){
                     e.target.textContent='?';
                 }else if(e.target.textContent = '?'){
-                    e.target.classList.remove('rClicked');
-                    e.target.textContent='';
-                    /* if(dataset[line][block] === 'X'){
+                    if(dataset[line][block] === 'X'){
                         e.target.textContent='X';
                     }else{
                         e.target.textContent='';
-                    } */
+                    }
                 }
 
             })
@@ -70,10 +68,6 @@ exec.addEventListener('click',function(){
             td.addEventListener('click',function(e){
                 if(pause){
                     return; 
-                }
-                if(e.target.textContent === '!'){
-                    return;
-
                 }
                 e.target.classList.add('clicked');
                 var trT = e.target.parentNode;
@@ -83,7 +77,7 @@ exec.addEventListener('click',function(){
                 if(dataset[line][block] === 1){
                     return;
                 }
-                if(dataset[line][block]=== 'X'){
+                if(e.target.textContent === 'X'){
                     e.target.textContent = '펑!'
                     pause = true;
                 }else{//지뢰가 아닐때
@@ -159,7 +153,7 @@ exec.addEventListener('click',function(){
     for(var i =0; i < mines.length; i++){
         var horOrder = Math.floor(mines[i]/hor);
         var verOrder = mines[i] % hor;
-        //tbody.children[horOrder].children[verOrder].textContent='X';
+        tbody.children[horOrder].children[verOrder].textContent='X';
         dataset[horOrder][verOrder] = "X";
     }
 
