@@ -1,5 +1,15 @@
-td {
+tbody td {
     border: 1px solid black;
     width: 20px;
     height: 20px;
+    background-color: #888;
 }
+
+td.clicked {
+    background-color: #fff;
+}
+
+td.rClicked {
+    background-color: #f28;
+}
+
