@@ -3,6 +3,7 @@ var tbody = document.querySelector('#table tbody');
 var dataset =[]; 
 
 exec.addEventListener('click',function(){
+    tbody.innerHTML='';//내부 초기화
     var hor = parseInt(document.querySelector('#hor').value);
     var ver = parseInt(document.querySelector('#ver').value);
     var mine = parseInt(document.querySelector('#mine').value);
@@ -23,6 +24,7 @@ exec.addEventListener('click',function(){
     //네모칸 만들기
     
     for(i=0; i<ver; i++){
+        console.log(ver);
         var arr=[];
         dataset.push(arr);
         var tr = document.createElement('tr');
@@ -30,19 +32,22 @@ exec.addEventListener('click',function(){
         for(j=0; j<hor; j++){
             arr.push(1);
             var td = document.createElement('td');
-            td.textContent= 1;
+            td.textContent= '';
             //깃발이벤트 심기
             td.addEventListener('contextmenu',function(e){
                 e.preventDefault();
-                e.target.textContent="!";
+                console.log('RIGHT',e.target.textContent);
                 var trT = e.target.parentNode;
                 var tbodyT = e.target.parentNode.parentNode;
                 var block = Array.prototype.indexOf.call(trT.children, e.target);
                 var line = Array.prototype.indexOf.call(tbodyT.children, trT);
-                console.log(e.target);
-                console.log(line,block);
-                dataset[line][block] = '!';
-                console.log(dataset);
+                if( ['','X'].includes(e.target.textContent)){
+                    e.target.textContent='!';
+                }else if(e.target.textContent === '!'){
+                    e.target.textContent='?';
+                }else if(e.target.textContent = '?')
+                e.target.textContent=dataset[line][block];
+
                 
         })
             tr.appendChild(td);
@@ -51,10 +56,11 @@ exec.addEventListener('click',function(){
         
     }
     //지뢰 심기
-    console.log(mines[1]);
+    console.log(mines);
     for(var i =0; i < mines.length; i++){
-        var horOrder = Math.floor(mines[i]/10);
-        var verOrder = mines[i] % 10;
+        var horOrder = Math.floor(mines[i]/hor);
+        var verOrder = mines[i] % hor;
+        console.log(horOrder,verOrder);
         tbody.children[horOrder].children[verOrder].textContent='X';
         dataset[horOrder][verOrder] = "X";
     }
