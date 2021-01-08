@@ -2,10 +2,14 @@ var exec = document.querySelector('#execel');
 var tbody = document.querySelector('#table tbody');
 var dataset =[]; 
 var value;
+var pause = false;
+var openCount = 0;
 
 exec.addEventListener('click',function(){
     tbody.innerHTML='';//내부 초기화
     dataset = [];
+    pause = false;
+    openCount = 0;
     var hor = parseInt(document.querySelector('#hor').value);
     var ver = parseInt(document.querySelector('#ver').value);
     var mine = parseInt(document.querySelector('#mine').value);
@@ -37,6 +41,9 @@ exec.addEventListener('click',function(){
             //깃발이벤트 심기
             td.addEventListener('contextmenu',function(e){
                 e.preventDefault();
+                if(pause){
+                    return; 
+                }
                 e.target.classList.add('rClicked');
                 var trT = e.target.parentNode;
                 var tbodyT = e.target.parentNode.parentNode;
@@ -59,16 +66,24 @@ exec.addEventListener('click',function(){
             })
             //click event
             td.addEventListener('click',function(e){
+                if(pause){
+                    return; 
+                }
                 e.target.classList.add('clicked');
-
-
                 var trT = e.target.parentNode;
                 var tbodyT = e.target.parentNode.parentNode;
                 var block = Array.prototype.indexOf.call(trT.children, e.target);
                 var line = Array.prototype.indexOf.call(tbodyT.children, trT);
+                if(dataset[line][block] === 1){
+                    return;
+                }
                 if(e.target.textContent === 'X'){
                     e.target.textContent = '펑!'
+                    pause = true;
                 }else{//지뢰가 아닐때
+                    if(dataset[line][block] !== 1){
+                        openCount++;
+                    }
                     dataset[line][block] = 1;
                 
                     var round = [dataset[line][block -1],
@@ -88,8 +103,9 @@ exec.addEventListener('click',function(){
                     var mineCount = round.filter(function(v){
                         return v === 'X';
                     }).length;
-                    e.target.textContent = mineCount;
-                    if(e.target.textContent === '0'){
+                    e.target.textContent = mineCount || ''; // A||B A의 값이 거짓의 값(null, 0 ,undefined, Nan,false)이면 B로 적용
+                    //0 주면 8개 오픈
+                    if(e.target.textContent === ''){
                         console.log(line,block);
                         var zeroRound = [tbody.children[line].children[block -1],
                         tbody.children[line].children[block +1]];
@@ -121,7 +137,11 @@ exec.addEventListener('click',function(){
                         })
                     }
                 }
-               
+                console.log(openCount,(hor*ver)-mine)
+               if(openCount === (hor*ver)-mine){
+                   pause = true;
+                   console.log("end");
+               }
 
             })
 
