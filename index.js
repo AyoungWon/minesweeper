@@ -49,6 +49,7 @@ exec.addEventListener('click',function(){
                 var tbodyT = e.target.parentNode.parentNode;
                 var block = Array.prototype.indexOf.call(trT.children, e.target);
                 var line = Array.prototype.indexOf.call(tbodyT.children, trT);
+                var remember = dataset[line][block];
                 if( ['','X'].includes(e.target.textContent)){
                     //value = e.target.textContent;
                     console.log(value);
@@ -58,6 +59,12 @@ exec.addEventListener('click',function(){
                 }else if(e.target.textContent = '?'){
                     e.target.classList.remove('rClicked');
                     e.target.textContent='';
+                    if(remember === 'X'){
+                        dataset[line][block] = 'X';
+                    }else{
+                        dataset[line][block] = 0;
+                    }
+                    
                     /* if(dataset[line][block] === 'X'){
                         e.target.textContent='X';
                     }else{
