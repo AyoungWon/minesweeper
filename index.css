@@ -82,7 +82,9 @@ tbody td {
 }
 
 td.clicked {
-    background-color: #fff;
+    background-color: #fff !important;
+    color: #000 !important;
+    font-weight: normal !important;
     box-shadow: inset 4px 4px rgba(0,0,0,0.1);
 }
 
@@ -93,7 +95,7 @@ td.rClicked {
 }
 
 td.rClicked.first {
-    background-color: rgb(223, 162, 190);
+    background-color: rgb(162, 196, 223);
     
     
 }
@@ -102,8 +104,8 @@ td.rClicked.second {
 }
 
 td.mineClicked {
-    background-color: rgb(219, 83, 83);
-    color: rgb(255, 196, 0);
+    background-color: rgb(219, 83, 83) !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 #result {
