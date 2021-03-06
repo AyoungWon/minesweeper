@@ -50,24 +50,26 @@ exec.addEventListener('click',function(){
                 if(pause){
                     return; 
                 }
-                e.target.classList.add('rClicked');
+                //e.target.classList.add('rClicked');
                 var trT = e.target.parentNode;
                 var tbodyT = e.target.parentNode.parentNode;
                 var block = Array.prototype.indexOf.call(trT.children, e.target);
                 var line = Array.prototype.indexOf.call(tbodyT.children, trT);
                 var remember = dataset[line][block];
-                if( ['','X'].includes(e.target.textContent)){
+                if( (!e.target.classList.contains('rClicked'))){
                     //value = e.target.textContent;
                     console.log(value);
-                    e.target.textContent='!';
+                    e.target.innerHTML='<i class="fab fa-font-awesome-flag"></i>'
                     e.target.className='rClicked first';
-                }else if(e.target.textContent === '!'){
+                    console.log(e.target.classList.contains('first'))
+                }else if(e.target.classList.contains('first')){
+                    console.log('1111')
                     e.target.classList.remove('first');
                     e.target.classList.add('second');
-                    e.target.textContent='?';
-                }else if(e.target.textContent = '?'){
+                    e.target.innerHTML='<i class="fas fa-question"></i>'
+                }else if(e.target.classList.contains('second')){
                     e.target.className='';
-                    e.target.textContent='';
+                    e.target.innerHTML=''
                     if(remember === 'X'){
                         dataset[line][block] = 'X';
                     }else{
