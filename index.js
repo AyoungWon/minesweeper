@@ -1,15 +1,20 @@
 var exec = document.querySelector('#execel');
 var tbody = document.querySelector('#table tbody');
+var result = document.querySelector('#result')
 var dataset =[]; 
 var value;
 var pause = false;
 var openCount = 0;
+var firstHor,firstVer,firstBomb
+/* 변경 */
 
 exec.addEventListener('click',function(){
     tbody.innerHTML='';//내부 초기화
     dataset = [];
     pause = false;
     openCount = 0;
+    exec.innerHTML='<i class="fas fa-sync-alt"></i>'
+    result.textContent=""
     var hor = parseInt(document.querySelector('#hor').value);
     var ver = parseInt(document.querySelector('#ver').value);
     var mine = parseInt(document.querySelector('#mine').value);
@@ -24,6 +29,7 @@ exec.addEventListener('click',function(){
     while (mineArr.length > (hor * ver) - mine){
         var random = mineArr.splice(Math.floor(Math.random()*mineArr.length),1)[0];
         mines.push(random);
+        
     } 
 
 
@@ -54,22 +60,19 @@ exec.addEventListener('click',function(){
                     //value = e.target.textContent;
                     console.log(value);
                     e.target.textContent='!';
+                    e.target.className='rClicked first';
                 }else if(e.target.textContent === '!'){
+                    e.target.classList.remove('first');
+                    e.target.classList.add('second');
                     e.target.textContent='?';
                 }else if(e.target.textContent = '?'){
-                    e.target.classList.remove('rClicked');
+                    e.target.className='';
                     e.target.textContent='';
                     if(remember === 'X'){
                         dataset[line][block] = 'X';
                     }else{
                         dataset[line][block] = 0;
                     }
-                    
-                    /* if(dataset[line][block] === 'X'){
-                        e.target.textContent='X';
-                    }else{
-                        e.target.textContent='';
-                    } */
                 }
 
             })
@@ -87,15 +90,29 @@ exec.addEventListener('click',function(){
                 var tbodyT = e.target.parentNode.parentNode;
                 var block = Array.prototype.indexOf.call(trT.children, e.target);
                 var line = Array.prototype.indexOf.call(tbodyT.children, trT);
+                if(openCount === 0) {
+                 firstHor = line;
+                 firstVer = block   
+                }
                 if(dataset[line][block] === 1){
                     return;
                 }
                 if(dataset[line][block]=== 'X'){
-                    e.target.textContent = '펑!'
-                    pause = true;
+                    if(openCount === 0){
+
+                        firstBomb = true
+                        exec.click()
+                    }else{
+                        e.target.classList.add('mineClicked');
+                        e.target.innerHTML = '<i class="fas fa-bomb"></i>'
+                        pause = true;
+                        result.textContent="Bomb! 지뢰를 밟았습니다😂"
+                    }
+                    
                 }else{//지뢰가 아닐때
                     if(dataset[line][block] !== 1){
                         openCount++;
+                        console.log(openCount);
                     }
                     dataset[line][block] = 1;
                 
@@ -119,7 +136,6 @@ exec.addEventListener('click',function(){
                     e.target.textContent = mineCount || ''; // A||B A의 값이 거짓의 값(null, 0 ,undefined, Nan,false)이면 B로 적용
                     //0 주면 8개 오픈
                     if(e.target.textContent === ''){
-                        console.log(line,block);
                         var zeroRound = [tbody.children[line].children[block -1],
                         tbody.children[line].children[block +1]];
                         if(tbody.children[line -1]){
@@ -149,10 +165,12 @@ exec.addEventListener('click',function(){
 
                         })
                     }
-                }
                if(openCount === (hor*ver)-mine){
                    pause = true;
                    console.log("end");
+                   result.textContent="🎉대단해요! 모든 지뢰를 찾았습니다!"
+                }
+                   
                }
 
             })
@@ -170,6 +188,12 @@ exec.addEventListener('click',function(){
         dataset[horOrder][verOrder] = "X";
     }
 
+    if(firstBomb){
+        tbody.children[firstHor].children[firstVer].click()
+        firstVer = null;
+        firstVer = null;
+        firstBomb = false
+    }
+
 })
 
-var timer = document.querySelector('#timer');
