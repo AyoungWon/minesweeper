@@ -1,15 +1,111 @@
+@import "reset.css";
+
+body {
+    width: calc(100vw - 200px);
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px;
+
+}
+
+.setting-wrap {
+    display: flex;
+    font-size: 1rem;
+}
+
+.setting-wrap div {
+    margin-right: 1rem;
+}
+
+.setting-wrap div {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    padding: 0%;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.1);
+
+}
+
+.setting-wrap label {
+    display: inline-block;
+    background-color: rgb(193, 194, 194);
+    line-height: 40px;
+    height: 40px;
+    margin: 0 -5px 0 0;
+    padding: 0 20px;
+    color: #f8f8f8;
+
+}
+.setting-wrap input {
+    display: inline-block;
+    height: 38px;
+    border: none;
+    font-size: 1.125rem;
+    width: 80px;
+    padding: 0;
+    padding-bottom: 2px;
+    text-align: center;
+}
+
+.setting-wrap input:focus {
+    outline: none;
+}
+
+#execel {
+    outline: none;
+    border: none;
+    width: 50px;
+    padding: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+
+#table {
+    border: 4px solid #fff;
+    box-shadow: 0 8px 8px rgba(50, 50, 93, 0.21), 0 8px 7px rgba(0, 0, 0, 0.15);
+    margin: 50px 0;
+}
+
 tbody td {
-    border: 1px solid black;
-    width: 20px;
-    height: 20px;
+    border: 4px solid #fff;
+    width: 30px;
+    height: 30px;
     background-color: #888;
+    text-align: center;
+    line-height: 30px;
 }
 
 td.clicked {
     background-color: #fff;
+    box-shadow: inset 4px 4px rgba(0,0,0,0.1);
 }
 
 td.rClicked {
-    background-color: #f28;
+    box-shadow: inset 4px 4px rgba(0,0,0,0.1);
+    color: #fff;
+    font-weight: bold;
 }
 
+td.rClicked.first {
+    background-color: rgb(223, 162, 190);
+    
+    
+}
+td.rClicked.second {
+    background-color: rgb(255, 228, 140);
+}
+
+td.mineClicked {
+    background-color: rgb(219, 83, 83);
+    color: rgb(255, 196, 0);
+}
+
+#result {
+    font-size: 3rem;
+}
