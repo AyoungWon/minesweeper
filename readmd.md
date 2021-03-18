@@ -4,8 +4,9 @@
 
 
 ## Let's see
-그림파일
-* 유투브: <https://youtu.be/xJw-81VwtYQ>
+<img src="/screenshot.png"  width="300px" height="200px">
+
+* youtube: <https://youtu.be/xJw-81VwtYQ>
 * 배포 사이트: <https://wayne-minesweeper.web.app>
 
 
